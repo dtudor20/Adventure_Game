@@ -8,15 +8,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
 public class Player extends Entity implements KeyListener {
-    private boolean upPressed, downPressed, leftPressed, rightPressed, ePressed, spacePressed;
+    private boolean upPressed, downPressed, leftPressed, rightPressed, ePressed, spacePressed,gPressed;
     private BufferedImage frontImage, backImage, leftImage, rightImage, item_box, selected_item_box, heart,empty_heart;
-    public ArrayList<Item> inventory;
+    public Item[] inventory=new Item[5];
     private int inventory_picked =0;
     public String direction;
     public int health;
@@ -24,7 +23,6 @@ public class Player extends Entity implements KeyListener {
         super(game_panel);
         direction = "front";
         health = 10;
-        inventory = new ArrayList<>();
         game_panel.setFocusable(true);
         game_panel.requestFocusInWindow();
         game_panel.addKeyListener(this);
@@ -40,13 +38,13 @@ public class Player extends Entity implements KeyListener {
             g2d.drawImage(item_box, i * game_panel.tile_size, 0, game_panel.tile_size, game_panel.tile_size, null);
             
             // Draw the item if it exists
-            if (i<inventory.size() && inventory.get(i) != null) {
-                inventory.get(i).update(g2d);
+            if (inventory[i] != null) {
+                inventory[i].update(g2d);
             }
         }
     }
 
-    public ArrayList<Item> getInventory() {
+    public Item[] getInventory() {
         return inventory;
     }
     private void loadPlayerImages() {
@@ -98,13 +96,11 @@ public class Player extends Entity implements KeyListener {
             int playerRight = newX + tileSize;
             int playerBottom = newY + tileSize;
             if (entity instanceof Item && 
-                newX + buffer >= entity.x && newX - buffer <= entityRight &&
-                newY + buffer >= entity.y && newY - buffer <= entityBottom) {
+                newX + 2*buffer >= entity.x && newX - buffer <= entityRight &&
+                newY + 2*buffer >= entity.y && newY - buffer <= entityBottom) {
                 ((Item) entity).pickUp();
                 return false;
-            } else if (entity instanceof Item) {
-                return false;
-            }
+            } 
             if (newX + buffer < entityRight && playerRight - buffer > entity.x &&
                 newY + buffer < entityBottom && playerBottom - buffer > entity.y) {
                 if (ePressed && entity.isInteractable) {
@@ -121,16 +117,26 @@ public class Player extends Entity implements KeyListener {
 }
 
     @Override
-public void update(Graphics2D g2d) {
+    public void update(Graphics2D g2d) {
     draw(g2d);
     drawInventory(g2d);
     drawHealth(g2d);
     if (spacePressed) {
-        if (inventory.size() > inventory_picked) {
-            System.out.println(inventory.size());
-            inventory.get(inventory_picked).use();
+        if (inventory[inventory_picked] != null) {
+            inventory[inventory_picked].use();
         }
     }
+    if(gPressed)
+    {
+        if (inventory[inventory_picked] != null) {
+            Item item = inventory[inventory_picked];
+            item.x = this.x;
+            item.y = this.y+game_panel.tile_size;
+            inventory[inventory_picked] = null;
+            game_panel.getEntities().add(1,item);
+        }
+    }
+
     boolean canMoveUp = upPressed && !checkCollision(0, -speed);
     boolean canMoveDown = downPressed && !checkCollision(0, speed);
     boolean canMoveLeft = leftPressed && !checkCollision(-speed, 0);
@@ -221,6 +227,10 @@ public void update(Graphics2D g2d) {
         {
             spacePressed = true;
         }
+        if(keyCode==KeyEvent.VK_G)
+        {
+            gPressed=true;
+        }
     }
 
     @Override
@@ -252,6 +262,10 @@ public void update(Graphics2D g2d) {
         if(keyCode == KeyEvent.VK_SPACE)
         {
             spacePressed = false;
+        }
+        if(keyCode == KeyEvent.VK_G)
+        {
+            gPressed = false;
         }
     }
 }

@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
     private ArrayList<Entity> entities;
     private boolean playerHit;
     private long hitTime;
-    private static final long HIT_DISPLAY_DURATION = 500; // Duration to display the red tint in milliseconds
+    private static final long HIT_DISPLAY_DURATION = 200; // Duration to display the red tint in milliseconds
     public GamePanel() {
         this.setPreferredSize(new Dimension(screen_width, screen_height));
         this.setBackground(Color.gray);

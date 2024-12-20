@@ -32,15 +32,18 @@ public class Item extends Entity{
     }
     public void pickUp() {
         Player player = (Player) game_panel.getEntities().get(0); // Assuming player is always the first entity
-        int inventorySize = player.getInventory().size();
-        if (inventorySize < 5) {
-            this.x = inventorySize * game_panel.tile_size;
-            this.y = 0;
-            player.getInventory().add(this);
-            game_panel.getEntities().remove(this);
-            System.out.println("Item picked up and added to inventory.");
-        } else {
-            System.out.println("Inventory is full. Item not picked up.");
+        Item[] inventory = player.getInventory();
+        
+        // Find the first empty slot in the inventory
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] == null) {
+                this.x = i * game_panel.tile_size;
+                this.y = 0;
+                inventory[i] = this;
+                game_panel.getEntities().remove(this);
+                System.out.println("Item picked up and added to inventory.");
+                return;
+            }
         }
     }
     public void use() {

@@ -22,12 +22,9 @@ public class HealthPotion extends Item {
         player.health += 1;
         player.health = Math.min(player.health, 10);// Limit the player health to 10
         // Use an iterator to safely remove the specific instance from the player's inventory
-        java.util.Iterator<Item> iterator = player.getInventory().iterator();
-        while (iterator.hasNext()) {
-            Item item = iterator.next();
-            if (item == this) {
-                
-                iterator.remove();
+        for (int i = 0; i < 5; i++) {
+            if (player.inventory[i] == this) {
+                player.inventory[i] = null;
                 break;
             }
         }
