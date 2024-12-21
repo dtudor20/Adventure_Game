@@ -6,14 +6,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import game.GamePanel;
-import item.CommonSword;
-import item.HealthPotion;
+import item.Item;
 
 public class WoodenChest extends Entity{
     BufferedImage image;
     public boolean isOpened, dropped;
-    public WoodenChest(GamePanel game_panel){
+    private Class<? extends Item> itemClass;
+    public WoodenChest(GamePanel game_panel, Class<? extends Item> itemClass){
         super(game_panel);
+        this.itemClass = itemClass;
         isInteractable = true;
         x=0;
         y=0;
@@ -30,8 +31,11 @@ public class WoodenChest extends Entity{
     {
         if(isOpened && !dropped)
         {
-            game_panel.getEntities().add(1,new CommonSword(game_panel, x+10, y+20)); // Access entities array from GamePanel
-            game_panel.getEntities().add(1,new HealthPotion(game_panel, x+20, y+20)); // Access entities array from GamePanel
+            try {
+                game_panel.getEntities().add(1, itemClass.getConstructor(GamePanel.class, int.class, int.class).newInstance(game_panel, x+20, y+20)); // Access entities array from GamePanel
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             dropped = true;
             try {
                 image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/game/tileset/wooden_chest_opened.png"));

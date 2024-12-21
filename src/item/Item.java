@@ -10,6 +10,7 @@ public class Item extends Entity{
     public boolean isConsumable;
     public boolean isWeapon;
     public int i,j;
+    public long lifetime;
     Item(GamePanel game_panel, int x, int y) {
         super(game_panel);
         isConsumable = false;
@@ -20,6 +21,7 @@ public class Item extends Entity{
         Player player = (Player) game_panel.getEntities().get(0); // Assuming player is always the first entity
         this.i = player.x;
         this.j = player.y;
+        lifetime=System.currentTimeMillis();
     }
     public void movePosition(int x, int y)
     {
@@ -29,6 +31,10 @@ public class Item extends Entity{
     public void update(Graphics2D g2d)
     {
         g2d.drawImage(null, x, y, game_panel.tile_size, game_panel.tile_size, null);
+        if(lifetime+60000<System.currentTimeMillis())
+        {
+            game_panel.getEntities().remove(this);
+        }
     }
     public void pickUp() {
         Player player = (Player) game_panel.getEntities().get(0); // Assuming player is always the first entity

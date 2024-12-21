@@ -32,6 +32,10 @@ public class HealthPotion extends Item {
     @Override
     public void update(java.awt.Graphics2D g2d) {
         g2d.drawImage(image, x, y, game_panel.tile_size, game_panel.tile_size, null);
+        if(lifetime+60000<System.currentTimeMillis())
+        {
+            game_panel.getEntities().remove(this);
+        }
     }
     
 }

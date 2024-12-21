@@ -11,15 +11,15 @@ public class EnergyBall extends Monster {
     private int speed;
     private double directionX;
     private double directionY;
-
-    public EnergyBall(GamePanel game_panel, int x, int y, double directionX, double directionY) {
+    private int damage;
+    public EnergyBall(GamePanel game_panel, int x, int y, double directionX, double directionY, int damage) {
         super(game_panel);
         this.x = x;
         this.y = y;
         this.directionX = directionX;
         this.directionY = directionY;
         speed = 5; // Set the speed of the energy ball
-
+        this.damage=damage;
         try {
             image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/monster/energy.png"));
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class EnergyBall extends Monster {
         g2d.draw(energyBallRect);
         g2d.draw(playerRect);
         if (energyBallRect.intersects(playerRect)) {
-            player.health -= 1; // Apply damage to the player
+            player.health -= damage; // Apply damage to the player
             System.out.println("Player hit! Remaining health: " + player.health);
             game_panel.setPlayerHit(true); // Set the player hit flag
             game_panel.getEntities().remove(this); // Remove the energy ball after hitting the player

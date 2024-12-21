@@ -67,19 +67,12 @@ public class Skeleton extends Monster {
             directionY = 0;
         }
     
-        EnergyBall energyBall = new EnergyBall(game_panel, x+game_panel.tile_size/2, y+game_panel.tile_size/2, directionX, directionY);
+        EnergyBall energyBall = new EnergyBall(game_panel, x+game_panel.tile_size/2, y+game_panel.tile_size/2, directionX, directionY, damage);
         game_panel.getEntities().add(1,energyBall);
     }
     
 
     private void draw(Graphics2D g2d) {
-        Player player = (Player) game_panel.getEntities().get(0); // Assuming player is always the first entity
-        int playerX = player.x;
-        int playerY = player.y;
-
-        int screenX = x - playerX + game_panel.getWidth() / 2;
-        int screenY = y - playerY + game_panel.getHeight() / 2;
-
-        g2d.drawImage(currentImage, screenX, screenY, game_panel.tile_size, game_panel.tile_size, null);
+        g2d.drawImage(currentImage, x, y, game_panel.tile_size, game_panel.tile_size, null);
     }
 }
