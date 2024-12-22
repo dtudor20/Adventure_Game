@@ -25,6 +25,7 @@ import entity.DoorLeft;
 import entity.DoorRight;
 import entity.Entity;
 import entity.Floor;
+import entity.Knight;
 import entity.Ladder;
 import entity.Left;
 import entity.Monster;
@@ -120,11 +121,12 @@ public class GamePanel extends JPanel {
                             break;
                         case 'c':
                             chestCount++;
-                            if(chestCount==1||chestCount==4||chestCount==5)
+
+                            if(chestCount==1||chestCount==4||chestCount==5||chestCount==10)
                                 entities.add(new WoodenChest(this, HealthPotion.class));
                             else if(chestCount==2)
                                 entities.add(new WoodenChest(this, CommonSword.class));
-                            else if(chestCount==3||chestCount==7 ||chestCount==8)
+                            else if(chestCount==3||chestCount==7 ||chestCount==8||chestCount==9)
                                 entities.add(new WoodenChest(this, SilverKey.class));
                             else if(chestCount==6)
                                 entities.add(new WoodenChest(this, RareSword.class));
@@ -180,6 +182,14 @@ public class GamePanel extends JPanel {
                             entities.get(entities.size()-2).movePosition(x, y);
                             entities.get(entities.size() - 1).movePosition(x, y);
                             break;
+                        case 'k':
+                            entities.add(1,new Knight(this));
+                            entities.add(new Floor(this));
+                            entities.get(1).movePosition(x, y);
+                            entities.get(entities.size() - 1).movePosition(x, y);
+                            monster_count++;
+                            break;
+
                     }
                 }
                 row++;

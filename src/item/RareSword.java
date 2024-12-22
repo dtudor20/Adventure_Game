@@ -12,7 +12,7 @@ public class RareSword extends CommonSword {
     BufferedImage image, flipped_image, mirrored_image;
     public RareSword(GamePanel game_panel, int x, int y) {
         super(game_panel,x, y);
-        range = 20;
+        range = 40;
         damage = 2;
         cooldown = 0.5f;
         attack_time = 0.2f;

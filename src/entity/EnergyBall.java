@@ -21,7 +21,7 @@ public class EnergyBall extends Monster {
         speed = 5; // Set the speed of the energy ball
         this.damage=damage;
         try {
-            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/monster/energy.png"));
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/monster/energy2.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
