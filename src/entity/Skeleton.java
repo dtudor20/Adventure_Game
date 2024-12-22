@@ -31,6 +31,7 @@ public class Skeleton extends Monster {
     public void update(Graphics2D g2d) {
         if (health <= 0) {
             game_panel.getEntities().remove(this);
+            game_panel.monster_count--;
             return;
         }
 

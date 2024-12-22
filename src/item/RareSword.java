@@ -1,5 +1,4 @@
 package item;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -9,66 +8,23 @@ import entity.Monster;
 import entity.Player;
 import game.GamePanel;
 
-public class CommonSword extends Item {
-
-    protected BufferedImage createFlipped(BufferedImage image) {
-        java.awt.geom.AffineTransform tx = java.awt.geom.AffineTransform.getScaleInstance(1, -1);
-        tx.translate(0, -image.getHeight(null));
-        java.awt.image.AffineTransformOp op = new java.awt.image.AffineTransformOp(tx,
-                java.awt.image.AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        return op.filter(image, null);
-    }
-
-    protected BufferedImage createMirrored(BufferedImage image) {
-        java.awt.geom.AffineTransform tx = java.awt.geom.AffineTransform.getScaleInstance(-1, 1);
-        tx.translate(-image.getWidth(null), 0);
-        java.awt.image.AffineTransformOp op = new java.awt.image.AffineTransformOp(tx,
-                java.awt.image.AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        return op.filter(image, null);
-    }
-
+public class RareSword extends CommonSword {
     BufferedImage image, flipped_image, mirrored_image;
-    public int range;
-    public int damage;
-    public float cooldown;
-    public float attack_time;
-    public boolean isAttacking;
-    public long attackStartTime;
-    public long lastAttackTime;
-    protected String direction;
-    protected java.util.List<Monster> hitMonsters = new java.util.ArrayList<>();
-
-    public CommonSword(GamePanel game_panel, int x, int y) {
-        super(game_panel, x, y);
-        this.x = x;
-        this.y = y;
-        range = 10;
-        damage = 1;
-        cooldown = 1;
+    public RareSword(GamePanel game_panel, int x, int y) {
+        super(game_panel,x, y);
+        range = 20;
+        damage = 2;
+        cooldown = 0.5f;
         attack_time = 0.2f;
-        isWeapon = true;
         try {
-            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/game/items/common_sword.png"));
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/game/items/rare_sword.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         flipped_image = createFlipped(image);
         mirrored_image = createMirrored(image);
+        
     }
-
-    @Override
-    public void use() {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastAttackTime >= cooldown * 1000) {
-            // Start the attack
-            isAttacking = true;
-            hitMonsters.clear();
-            direction = ((Player) game_panel.getEntities().get(0)).direction;
-            attackStartTime = currentTime;
-            lastAttackTime = currentTime;
-        }
-    }
-
     @Override
     public void update(Graphics2D g2d) {
         Player player = (Player) game_panel.getEntities().get(0); // Assuming player is always the first entity
@@ -153,5 +109,4 @@ public class CommonSword extends Item {
             }
         }
     }
-
 }

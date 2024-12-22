@@ -62,7 +62,7 @@ public class Monster extends Entity {
             x = newX;
         } else {
             // Move away from the player
-            if (x > game_panel.getEntities().get(0).x) {
+            if (x > newX) {
                 x += speed;
             } else {
                 x -= speed;
@@ -80,7 +80,7 @@ public class Monster extends Entity {
             y = newY;
         } else {
             // Move away from the player
-            if (y > game_panel.getEntities().get(0).y) {
+            if (y >newY) {
                 y += speed;
             } else {
                 y -= speed;

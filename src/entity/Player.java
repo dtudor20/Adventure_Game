@@ -97,7 +97,7 @@ public class Player extends Entity implements KeyListener {
         List<Entity> entities = game_panel.getEntities();
         for (int i = entities.size() - 1; i >= 0; i--) {
             Entity entity = entities.get(i);
-            if (entity != this && !(entity instanceof Floor)) {
+            if (entity != this && !(entity instanceof Floor) && !(entity instanceof Monster)) {
                 int entityRight = entity.x + tileSize;
                 int entityBottom = entity.y + tileSize;
                 int playerRight = newX + tileSize;

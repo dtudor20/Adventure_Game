@@ -35,8 +35,8 @@ public class EnergyBall extends Monster {
         Player player = (Player) game_panel.getEntities().get(0); // Assuming player is always the first entity
         Rectangle energyBallRect = new Rectangle(x, y, game_panel.tile_size/2, game_panel.tile_size/2);
         Rectangle playerRect = new Rectangle(player.x, player.y, game_panel.tile_size, game_panel.tile_size);
-        g2d.draw(energyBallRect);
-        g2d.draw(playerRect);
+        //g2d.draw(energyBallRect);
+        //g2d.draw(playerRect);
         if (energyBallRect.intersects(playerRect)) {
             player.health -= damage; // Apply damage to the player
             System.out.println("Player hit! Remaining health: " + player.health);
